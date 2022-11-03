@@ -1,0 +1,53 @@
+# This is a config file tailored for the Kubord 2 project.
+
+import:
+    source_dir: source
+    text_annotation: text
+
+xml_import:
+    elements:
+        - token:wordbreak
+        - token:original
+        - text:date
+
+classes:
+    "token:msd": <token>:stanza.msd_hunpos_backoff
+    "token:pos": <token>:stanza.pos_hunpos_backoff
+    "token:baseform": <token>:saldo.baseform2
+    "token:sense": <token>:wsd.sense
+    "token:lemgram": <token>:saldo.lemgram
+
+export:
+    default:
+        # - stats_export:freq_list # This is the export for the previous format (Kubord 1)
+        - sbx_kubord_stats:freq_list_kubord
+        - korp:relations_sql
+    annotations:
+        - <token:word>
+        - <token:msd> as POS
+        - <token>:stats_export.baseform_first as lemma
+        - <token>:stats_export.sense_best as SALDO sense
+        - <token>:stats_export.lemgram_first as lemgram
+        - <token>:stats_export.complemgram_best_cond as compound
+        - <token>:misc.from_struct_token_wordbreak as wordbreak
+        - <token>:misc.from_struct_token_original as original
+    source_annotations:
+        - page:number
+        - text:date
+        - text:title
+
+dateformat:
+  datetime_from: text:date
+  datetime_to: text:date
+  datetime_informat: "%Y-%m-%d"
+
+segment:
+    existing_tokens: token
+
+stanza:
+    # Default value: 5000. May have to be lowered if Stanza crashes due to lack of memory.
+    batch_size: 5000
+    # Default value: 250. May have to be lowered if Stanza crashes.
+    max_sentence_length: 250
+    # Default value: 0 (=no limit). May have to be set if Stanza crashes.
+    max_token_length: 0
