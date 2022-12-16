@@ -21,7 +21,7 @@ export:
     default:
         # - stats_export:freq_list # This is the export for the previous format (Kubord 1)
         - sbx_kubord_stats:freq_list_kubord
-        - korp:relations_sql
+        - korp:wordpicture_sql
     annotations:
         - <token:word>
         - <token:msd> as POS
